@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from scrapy import Item, Field
 from scrapy.loader import ItemLoader
-from scrapy.loader.processors import TakeFirst, Compose, MapCompose, Join
+from scrapy.loader.processors import TakeFirst, Compose, MapCompose, Join, Identity
+
+
+strip = lambda s: s.strip()
 
 
 class Offer(Item):
@@ -16,4 +19,7 @@ class Offer(Item):
 
 class OfferLoader(ItemLoader):
     default_item_class = Offer
+    default_input_processor = MapCompose(strip)
     default_output_processor = TakeFirst()
+
+    partner_ad_in = Identity()
